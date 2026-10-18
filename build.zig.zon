@@ -22,5 +22,13 @@
             .url = "git+https://github.com/MasonRemaley/SDL3?ref=zig-0.17.0#e435ce01ebb0b976ebfb77e6e42e1c51bcb7db60",
             .hash = "sdl-1.0.3+3.4.16-i4QD0ecIqgDBtEjDt3HOk75vEsDjNkPhw_ZIYMEu-NT_",
         },
+        .mr_tween = .{
+            .url = "git+https://codeberg.org/Games-by-Mason/mr_tween?ref=zig-0.17.0#19fdb2adf0b59e9b385efd939e6f3be9c7ed4622",
+            .hash = "mr_tween-0.2.0-WbH78YuhAQDWFpk7Y8flZbN1Sajt8krIADPF39hD6JPS",
+        },
+        .mr_geom = .{
+            .url = "git+https://codeberg.org/Games-by-Mason/mr_geom?ref=zig-0.17.0#d4eabb847452fd20956a1f00ed322147413e666a",
+            .hash = "mr_geom-0.2.0-7BWThbH6BAAdhX52CtyqFV4Oc4fPiZi0kLc7vcF2yImh",
+        },
     },
 }

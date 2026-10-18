@@ -14,6 +14,7 @@ var simulator_target: std.Build.ResolvedTarget = undefined;
 
 pub fn build(b: *Build) void {
     const optimize = b.standardOptimizeOption(.{});
+    const debug = b.option(bool, "debug", "") orelse false;
     simulator_target = b.standardTargetOptions(.{});
 
     const mz_dep = b.dependency("microzig", .{});
@@ -81,6 +82,11 @@ pub fn build(b: *Build) void {
         .name = "blobs",
         .optimize = .ReleaseSmall,
         .root_source_file = b.path("carts/blobs/src/blobs.zig"),
+    });
+    add_cart(b, &dep, .{
+        .name = "mr_badge",
+        .optimize = if (debug) .Debug else .ReleaseSmall,
+        .root_source_file = b.path("carts/mr_badge/src/main.zig"),
     });
     add_cart(b, &dep, .{
         .name = "plasma",
@@ -239,6 +245,9 @@ pub fn add_cart(b: *Build, dep: *Build.Dependency, options: OsCartOptions) void 
     // Inject cart and api modules into the entry wrapper
     fw.exe.root_module.addImport("user_cart", user_cart_module);
     fw.exe.root_module.addImport("cart-api", cart_api_module);
+    // XXX: if give wrong target error not helpful, not expected to be comptime
+    const mr_geom = b.dependency("mr_geom", .{});
+    fw.exe.root_module.addImport("mr_geom", mr_geom.module("mr_geom"));
 
     const asset_step: ?*Build.Step = if (options.custom_builder) |builder| blk: {
         // Zig build no longer allows custom/anonymous steps, so we'll mark it as "top-level"
